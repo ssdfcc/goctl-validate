@@ -37,6 +37,12 @@ import (
 	"strings"
 )
 
+// CustomValidator represents a validator.
+type CustomValidator interface {
+	// CustomValidate validates the value.
+	CustomValidate() error
+}
+
 var validate *validator.Validate
 var trans ut.Translator
 
@@ -72,7 +78,9 @@ func translate(errs error) error {
 	handlerTemplate = `
 {{range $index, $type :=.RequestTypes}}
 func (r *{{$type}})Validate() error {
-	if err := validate.Struct(r); err != nil {
+	if valid, ok := interface{}(r).(CustomValidator); ok {
+		return valid.CustomValidate()
+	} else if err := validate.Struct(r); err != nil {
 		return translate(err)
 	}
 	return nil
