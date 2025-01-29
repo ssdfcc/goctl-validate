@@ -12,5 +12,5 @@ $ GOPROXY=https://goproxy.cn/,direct go install github.com/ssdfcc/goctl-validate
 
 ### 3. 用法
 ```
-$ goctl api plugin -p goctl-go-compact -api user.api -dir .
+$ goctl api plugin -p goctl-validate -api user.api -dir .
 ```
